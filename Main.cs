@@ -216,7 +216,38 @@ void fragment() {
         helpButton.OffsetBottom = 80f;
         fpsLayer.AddChild(helpButton);
 
-        _helpDialog = new HelpDialog(this, uiTheme);
+        // NOTE: Ctrl+P (screenshot capture, see CaptureScreenshot) is deliberately
+        // left out of this list - it's a dev-only hotkey, not a user-facing control.
+        HelpSection[] helpSections =
+        [
+            new HelpSection
+            {
+                Name = "Mouse",
+                Items =
+                [
+                    ("Left drag", "Orbit camera"),
+                    ("Wheel", "Zoom in / out"),
+                    ("Drag & drop .fbx", "Load a new model"),
+                    ("Open button", "Browse for a new model"),
+                ]
+            },
+            new HelpSection
+            {
+                Name = "Keyboard",
+                Items =
+                [
+                    ("1", "Toggle white render mode"),
+                    ("2", "Toggle shadows"),
+                    ("3", "Toggle ambient occlusion"),
+                    ("4", "Toggle lit / SSAO debug view"),
+                    ("6", "Toggle ground reflections"),
+                    ("7", "Toggle frametime graph"),
+                    ("F1", "Toggle fullscreen"),
+                    ("Esc", "Quit"),
+                ]
+            }
+        ];
+        _helpDialog = new HelpDialog(this, "Hotkeys & Controls", helpSections, uiTheme);
         helpButton.Pressed += _helpDialog.Show;
 
         // Allow dropping .fbx files onto the game window to swap model + animation
@@ -274,6 +305,14 @@ void fragment() {
         {
             // !keyEvent.Echo ignores the repeated events an OS sends while a
             // key is held down, so each toggle only fires once per press.
+            // Ctrl+P: dev-only screenshot capture. NOTE: deliberately not a
+            // switch case below and never listed in helpSections in _Ready -
+            // keep this hotkey out of the in-app Help dialog.
+            if (keyEvent.CtrlPressed && keyEvent.Keycode == Key.P)
+            {
+                CaptureScreenshot();
+                return;
+            }
             switch (keyEvent.Keycode)
             {
                 case Key.Key1:
@@ -500,6 +539,21 @@ void fragment() {
         // covering the full screen - exactly what "fullscreen without chrome" means here.
         window.Mode = isFullscreen ? Window.ModeEnum.Windowed : Window.ModeEnum.Fullscreen;
         GD.Print($"Fullscreen: {!isFullscreen}");
+    }
+
+    // Hotkey [Ctrl+P]: dumps the current frame to screen.png next to Main.cs,
+    // for grabbing reference screenshots during development. NOTE: keep this
+    // out of the in-app Help dialog (see helpSections in _Ready) - it's a
+    // dev-only capture, not a user-facing control.
+    private void CaptureScreenshot()
+    {
+        var image = GetViewport().GetTexture().GetImage();
+        var path = ProjectSettings.GlobalizePath("res://screen.png");
+        var err = image.SavePng(path);
+        if (err == Error.Ok)
+            GD.Print($"Saved screenshot to {path}");
+        else
+            GD.PrintErr($"Failed to save screenshot to {path}: {err}");
     }
 
     // Hotkey [6]: toggles screen-space reflections and updates the ground

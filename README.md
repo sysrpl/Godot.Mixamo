@@ -1,5 +1,7 @@
 # Godot Mixamo Model Viewer
 
+![Screenshot](screen.png)
+
 A lightweight Godot 4.7 + C# viewer for previewing Mixamo-style animated FBX
 characters. The entire scene — camera rig, lighting, ground, and UI — is
 built in code (see [Main.cs](Main.cs)), so there's no `.tscn` scene graph to
