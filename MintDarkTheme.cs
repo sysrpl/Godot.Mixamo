@@ -58,9 +58,11 @@ public static class MintDarkTheme
 
     public static StyleBoxFlat MakeBodyPanelStyle()
     {
-        var style = new StyleBoxFlat();
-        style.BgColor = Background;
-        style.BorderColor = Border;
+        var style = new StyleBoxFlat
+        {
+            BgColor = Background,
+            BorderColor = Border
+        };
         style.SetBorderWidthAll(1);
         style.SetCornerRadiusAll(6);
         style.SetContentMarginAll(0f);
@@ -69,24 +71,28 @@ public static class MintDarkTheme
 
     public static StyleBoxFlat MakeHeaderPanelStyle()
     {
-        var style = new StyleBoxFlat();
-        style.BgColor = HeaderBackground;
-        style.BorderColor = Accent;
-        style.BorderWidthBottom = 2;
-        style.CornerRadiusTopLeft = 6;
-        style.CornerRadiusTopRight = 6;
-        style.ContentMarginLeft = 16f;
-        style.ContentMarginRight = 16f;
-        style.ContentMarginTop = 10f;
-        style.ContentMarginBottom = 10f;
+        var style = new StyleBoxFlat
+        {
+            BgColor = HeaderBackground,
+            BorderColor = Accent,
+            BorderWidthBottom = 2,
+            CornerRadiusTopLeft = 6,
+            CornerRadiusTopRight = 6,
+            ContentMarginLeft = 16f,
+            ContentMarginRight = 16f,
+            ContentMarginTop = 10f,
+            ContentMarginBottom = 10f
+        };
         return style;
     }
 
     private static StyleBoxFlat MakeFlatStyle(Color bg, Color border)
     {
-        var style = new StyleBoxFlat();
-        style.BgColor = bg;
-        style.BorderColor = border;
+        var style = new StyleBoxFlat
+        {
+            BgColor = bg,
+            BorderColor = border
+        };
         style.SetBorderWidthAll(1);
         style.SetCornerRadiusAll(3);
         style.ContentMarginLeft = 14f;
@@ -100,9 +106,11 @@ public static class MintDarkTheme
     {
         // Focus is drawn as an outline overlay on top of the normal/hover/pressed
         // style, so keep it transparent and only draw the accent border.
-        var style = new StyleBoxFlat();
-        style.BgColor = new Color(0f, 0f, 0f, 0f);
-        style.BorderColor = borderColor;
+        var style = new StyleBoxFlat
+        {
+            BgColor = new Color(0f, 0f, 0f, 0f),
+            BorderColor = borderColor
+        };
         style.SetBorderWidthAll(1);
         style.SetCornerRadiusAll(3);
         style.ContentMarginLeft = 14f;
