@@ -1,0 +1,11 @@
+# Godot 4+ specific ignores
+.godot/
+/android/build/
+
+# .NET / C#
+bin/
+obj/
+*.user
+
+# Claude Code local settings
+.claude/
